@@ -134,6 +134,28 @@ object Chapter5 {
       case (_, Cons(h2,t2)) => Some( (None, Some(h2())), (Empty, t2()))
       case _ => None
     }
+
+    /**
+      * Exercise 5.14
+      */
+    def startsWith[AA >: A](s2: Stream[AA]): Boolean = zipAll(s2).forAll {
+      case (_, None) => return true
+      case (Some(a), Some(b)) => a == b
+      case (None, _) => false
+    }
+
+    /**
+      * Exercise 5.15
+      */
+    def tails: Stream[Stream[A]] = cons(this, unfold(this) {
+      case Empty => None
+      case Cons(_, t) => Some( (t(), t()) )
+    })
+
+    /**
+      * Exercise 5.16
+      */
+    def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] = tails.map(_.foldRight(z)(f))
   }
 
   case object Empty extends Stream[Nothing]
@@ -191,6 +213,7 @@ object Chapter5 {
     def constant2[A](a: A): Stream[A] = unfold(())(_ => Some(a, ()))
 
     def ones2: Stream[Int] = unfold(())(_ => Some(1, ()))
+
   }
 
 }

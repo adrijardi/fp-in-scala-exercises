@@ -53,3 +53,14 @@ infinite3x3.take2(10).toList
 infinite3x3.takeWhile3(_ < 10000).toList
 infinite3x3.zipWith(finite(1, _ + 2, 10))(_+_).toList
 finite(1, _ + 2, 20).zipAll(finite(1, _ + 1, 20)).toList
+
+infinite3x3.startsWith(infinite3x3.take(5))
+infinite3x3.startsWith(Empty)
+infinite3x3.startsWith(Stream.constant(1))
+finite(1,_+1,10).startsWith(finite(1,_+1,10))
+finite(1,_+1,10).startsWith(finite(1,_+1,11))
+
+finite(1,_+1,10).tails.map(_.toList).toList
+
+Stream(1,2,3).scanRight(0)(_ + _).toList
+
